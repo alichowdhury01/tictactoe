@@ -2,6 +2,9 @@
 # Inspired from https://github.com/Aprataksh/Tic-tac-toe/blob/master/tic_tac_toe.py 
 # By user Aprataksh
 
+from tabnanny import check
+
+
 print("██     ██ ███████ ██       ██████  ██████  ███    ███ ███████     ████████  ██████      ████████ ██  ██████       ████████  █████   ██████       ████████  ██████  ███████\n"
       "██     ██ ██      ██      ██      ██    ██ ████  ████ ██             ██    ██    ██        ██    ██ ██               ██    ██   ██ ██               ██    ██    ██ ██\n"
       "██  █  ██ █████   ██      ██      ██    ██ ██ ████ ██ █████          ██    ██    ██        ██    ██ ██      █████    ██    ███████ ██      █████    ██    ██    ██ █████\n"
@@ -17,7 +20,6 @@ class Tictactoe:
                                [6, 7, 8], [0, 4, 8], 
                                [2, 4, 6], [0, 3, 6], 
                                [1, 4, 7], [2, 5, 8]]
-        self.moves = 0
         self.taken = "Cell already taken"
 
     def board(self):
@@ -33,49 +35,52 @@ class Tictactoe:
         return self.surface
 
     def player_x(self):
+        # Taken from: https://www.w3schools.com/python/python_try_except.asp
+        # By W3school
         try:
             user_position = int(input("Player X, please choose your position on the board: "))
             if self.pos[user_position] != "X" and self.pos[user_position] != "O":
                 self.pos[user_position] = "X"
                 self.board()
-                self.moves +=1
             else:
                 print(self.taken)
                 self.player_x()
-            self.check_win()
         except ValueError:
             print("Please enter a NUMBER between 0 and 8")
             self.player_x()
 
     def player_o(self):
+        # Taken from: https://www.w3schools.com/python/python_try_except.asp
+        # By W3school
         try:
             user_position = int(input("Player O, please choose your position on the board: "))
             if self.pos[user_position] != "X" and self.pos[user_position] != "O":
                 self.pos[user_position] = "O"
                 self.board()
-                self.moves +=1
             else:
                 print(self.taken)
                 self.player_o()
-            self.check_win()
-
         except ValueError:
             print("Please enter a NUMBER between 0 and 8")
             self.player_o()
 
     def check_win(self):
-        for i in self.win_conditions:
-            if all(j in self.pos for j in i):
-                return True
-            else:
-                False
+        for symb in self.win_conditions:
+            if self.board[symb[0]] == self.board[symb[1]] == self.board[symb[2]] == "X":
+                print("Player X WIN!")
+                self.play_again()
+            if self.board[symb[0]] == self.board[symb[1]] == self.board[symb[2]] == "O":
+                print("Player O WIN!")
+                self.play_again()
         
 
     def play(self):
         while True:
             self.player_x()
+            self.check_win()
             self.player_o()
-
+            self.check_win()
+            
     def run(self):
         self.board()
         self.play()
