@@ -1,11 +1,5 @@
-
 # Inspired from https://github.com/Aprataksh/Tic-tac-toe/blob/master/tic_tac_toe.py 
 # By user Aprataksh
-
-from tabnanny import check
-
-from self import self
-
 
 print("██     ██ ███████ ██       ██████  ██████  ███    ███ ███████     ████████  ██████      ████████ ██  ██████       ████████  █████   ██████       ████████  ██████  ███████\n"
       "██     ██ ██      ██      ██      ██    ██ ████  ████ ██             ██    ██    ██        ██    ██ ██               ██    ██   ██ ██               ██    ██    ██ ██\n"
@@ -39,12 +33,21 @@ class Tictactoe:
         return self.surface
 
     def player_one(self):
+        # The try... except will try to see if there's any symbols 
+        # From any users In the chosen cell. If no symbol it will add the 
+        # Current player symbol. In the case where there is already Something, 
+        # It will print that cell is already taken and call.
+        # The player_one() method. If anything else then is entered that is 
+        # Not in the list self.pos the except ValueError will an error
         # Taken from: https://www.w3schools.com/python/python_try_except.asp
         # By W3school
         try:
-            user_position = int(input(f"Player {self.player_1}, please choose your position on the board: "))
-            if self.pos[user_position] != self.player_1 and self.pos[user_position] != self.player_2:
-                self.pos[user_position] = self.player_1
+            self.user_position = int(input(f"Player {self.player_1}, please choose your position on the board: "))
+            while self.user_position < 0 or self.user_position > 8:
+                print("Please enter a NUMBER between 0 and 8")
+                self.player_one()
+            if self.pos[self.user_position] != self.player_1 and self.pos[self.user_position] != self.player_2:
+                self.pos[self.user_position] = self.player_1
                 self.board()
             else:
                 print(self.taken)
@@ -53,12 +56,21 @@ class Tictactoe:
             print("Please enter a NUMBER between 0 and 8")
 
     def player_two(self):
+        # The try... except will try to see if there's any symbols 
+        # From any users In the chosen cell. If no symbol it will add the 
+        # Current player symbol. In the case where there is already Something, 
+        # It will print that cell is already taken and call 
+        # The player_two() method. If anything else then is entered that is 
+        # Not in the list self.pos the except ValueError will an error
         # Taken from: https://www.w3schools.com/python/python_try_except.asp
         # By W3school
         try:
-            user_position = int(input(f"Player {self.player_2}, please choose your position on the board: "))
-            if self.pos[user_position] != self.player_1 and self.pos[user_position] != self.player_2:
-                self.pos[user_position] = self.player_2
+            self.user_position = int(input(f"Player {self.player_2}, please choose your position on the board: "))
+            while self.user_position < 0 or self.user_position > 8:
+                print("Please enter a NUMBER between 0 and 8")
+                self.player_one()
+            if self.pos[self.user_position] != self.player_1 and self.pos[self.user_position] != self.player_2:
+                self.pos[self.user_position] = self.player_2
                 self.board()
             else:
                 print(self.taken)
@@ -103,11 +115,11 @@ class Tictactoe:
     def rematch(self):
         while True:
             question = input(f"Player {self.player_1} and {self.player_2}, would like a rematch ?\n"
-                             f"Type y for YES or n for NO: ")
-            if question == "y":
+                             f"Type Y for YES or N for NO: ")
+            if question == "y" or "Y":
                 self.pos = [0, 1, 2, 3, 4, 5, 6, 7, 8]
                 self.run()
-            elif question == "n":
+            elif question == "n" or "N":
                 print("See you next time!")
                 quit()
             else:
@@ -125,14 +137,14 @@ class Players:
     def user_decision_symb(self):
         try:
             self.users_selection = (input("1. Use default symbols X and O\n"
-                                        "2. Choose your own symbols\n"
-                                        "Please make a selection: "))
+                                          "2. Choose your own symbols\n"
+                                          "Please make a selection: "))
             self.users_selection = int(self.users_selection)
             while (self.users_selection) < 1 or (self.users_selection) > 2:
                 print("Invalid option")
                 self.users_selection = (input("1. Use default symbols X and O\n"
-                                            "2. Choose your own symbols\n"
-                                            "Please make a selection: "))
+                                              "2. Choose your own symbols\n"
+                                              "Please make a selection: "))
                 self.users_selection = int(self.users_selection)
             if (self.users_selection) == 1:
                     return self.default_symb()
@@ -142,7 +154,7 @@ class Players:
                     while self.player_a == self.player_b:
                         print("Second player, you can't enter the same symbol as the first player")
                         self.player_b = str(input("Second player please enter a symbol of your choice: "))
-                    return self. player_a, self.player_b
+                    return self.player_a.upper(), self.player_b.upper()
         except ValueError:
             print("invalid")
             self.user_decision_symb()
@@ -150,7 +162,7 @@ class Players:
 
 if __name__ == "__main__":
     players = Players()
-    player_one, player_two = players.user_decision_symb()
-    game = Tictactoe(player_one, player_two)
+    player_1, player_2 = players.user_decision_symb()
+    game = Tictactoe(player_1, player_2)
     game.run()
 
