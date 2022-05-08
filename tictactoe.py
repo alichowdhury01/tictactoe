@@ -123,28 +123,34 @@ class Players:
         return self.player_1, self.player_2
 
     def user_decision_symb(self):
-        self.users_selection = int(input("1. Use default symbols X and O\n"
-                                     "2. Choose your own symbols\n"
-                                     "Please make a selection: "))
-        while int(self.users_selection) < 1 or int(self.users_selection) > 2:
-            print("Invalid option")
-            self.users_selection = int(input("1. Use default symbols X and O\n"
+        try:
+            self.users_selection = (input("1. Use default symbols X and O\n"
                                         "2. Choose your own symbols\n"
                                         "Please make a selection: "))
-        if self.users_selection == 1:
-                return self.default_symb()
-        if self.users_selection == 2:
-                self.player_a = str(input("First player please enter a symbol of your choice: "))
-                self.player_b = str(input("Second player please enter a symbol of your choice: "))
-                while self.player_a == self.player_b:
-                    print("Second player, you can't enter the same symbol as the first player")
+            self.users_selection = int(self.users_selection)
+            while (self.users_selection) < 1 or (self.users_selection) > 2:
+                print("Invalid option")
+                self.users_selection = (input("1. Use default symbols X and O\n"
+                                            "2. Choose your own symbols\n"
+                                            "Please make a selection: "))
+                self.users_selection = int(self.users_selection)
+            if (self.users_selection) == 1:
+                    return self.default_symb()
+            if (self.users_selection) == 2:
+                    self.player_a = str(input("First player please enter a symbol of your choice: "))
                     self.player_b = str(input("Second player please enter a symbol of your choice: "))
-                return self. player_a, self.player_b
+                    while self.player_a == self.player_b:
+                        print("Second player, you can't enter the same symbol as the first player")
+                        self.player_b = str(input("Second player please enter a symbol of your choice: "))
+                    return self. player_a, self.player_b
+        except ValueError:
+            print("invalid")
+            self.user_decision_symb()
 
 
 if __name__ == "__main__":
     players = Players()
-    player_1, player_2 = players.user_decision_symb()
-    game = Tictactoe(player_1, player_2)
+    player_one, player_two = players.user_decision_symb()
+    game = Tictactoe(player_one, player_two)
     game.run()
 
