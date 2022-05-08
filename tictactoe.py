@@ -1,6 +1,11 @@
 # Inspired from https://github.com/Aprataksh/Tic-tac-toe/blob/master/tic_tac_toe.py 
 # By user Aprataksh
 
+from tabnanny import check
+
+from self import self
+
+
 print("██     ██ ███████ ██       ██████  ██████  ███    ███ ███████     ████████  ██████      ████████ ██  ██████       ████████  █████   ██████       ████████  ██████  ███████\n"
       "██     ██ ██      ██      ██      ██    ██ ████  ████ ██             ██    ██    ██        ██    ██ ██               ██    ██   ██ ██               ██    ██    ██ ██\n"
       "██  █  ██ █████   ██      ██      ██    ██ ██ ████ ██ █████          ██    ██    ██        ██    ██ ██      █████    ██    ███████ ██      █████    ██    ██    ██ █████\n"
@@ -45,7 +50,7 @@ class Tictactoe:
             self.user_position = int(input(f"Player {self.player_1}, please choose your position on the board: "))
             while self.user_position < 0 or self.user_position > 8:
                 print("Please enter a NUMBER between 0 and 8")
-                self.player_one()
+                return self.player_one()
             if self.pos[self.user_position] != self.player_1 and self.pos[self.user_position] != self.player_2:
                 self.pos[self.user_position] = self.player_1
                 self.board()
@@ -68,7 +73,7 @@ class Tictactoe:
             self.user_position = int(input(f"Player {self.player_2}, please choose your position on the board: "))
             while self.user_position < 0 or self.user_position > 8:
                 print("Please enter a NUMBER between 0 and 8")
-                self.player_one()
+                return self.player_two()
             if self.pos[self.user_position] != self.player_1 and self.pos[self.user_position] != self.player_2:
                 self.pos[self.user_position] = self.player_2
                 self.board()
