@@ -14,10 +14,10 @@ print("██     ██ ███████ ██       ██████  
                                                                                                                                                                         
 
 class Tictactoe:
-    
     def __init__(self, player_1, player_2):
         self.player_1 = player_1
         self.player_2 = player_2
+        self.move = 0
         self.pos = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         self.win_conditions = [[0, 1, 2], [3, 4, 5],
                                [6, 7, 8], [0, 4, 8], 
@@ -54,6 +54,7 @@ class Tictactoe:
             if self.pos[self.user_position] != self.player_1 and self.pos[self.user_position] != self.player_2:
                 self.pos[self.user_position] = self.player_1
                 self.board()
+                self.moves()
             else:
                 print(self.taken)
                 self.player_one()
@@ -77,12 +78,17 @@ class Tictactoe:
             if self.pos[self.user_position] != self.player_1 and self.pos[self.user_position] != self.player_2:
                 self.pos[self.user_position] = self.player_2
                 self.board()
+                self.moves()
             else:
                 print(self.taken)
                 self.player_two()
         except ValueError:
             print("Please enter a NUMBER between 0 and 8")
             self.player_two()
+    
+    def moves(self):
+        self.move += 1
+        return self.move
 
     def check_win(self):
         for symb in self.win_conditions:
@@ -92,13 +98,23 @@ class Tictactoe:
             if self.pos[symb[0]] == self.pos[symb[1]] == self.pos[symb[2]] == self.player_2:
                 print(f"Player {self.player_2} WIN!")
                 self.play_again()
+    
+    def check_draw(self):
+        if self.move == 9:
+            for symb in self.win_conditions:
+                if self.pos[symb[0]] != self.pos[symb[1]] != self.pos[symb[2]] != self.player_1:
+                    print("It's a TRAP! Kidding it's a DRAW!")
+                    self.play_again()
+
 
     def play(self):
         while True:
             self.player_one()
             self.check_win()
+            self.check_draw()
             self.player_two()
             self.check_win()
+            self.check_draw()
             
     def run(self):
         self.board()
@@ -106,10 +122,11 @@ class Tictactoe:
     
     def play_again(self):
         while True:
-            question = input("Loosing player, would you like to try your luck again?\n"
+            question = input(f"Player {self.player_1} and {self.player_2}, would you like to try your luck again?\n"
                              "Type y for YES or n for NO: ")
             if question == "y":
                 self.pos = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                self.move = 0
                 self.run()
             elif question == "n":
                 print("See you next time!")
@@ -117,18 +134,6 @@ class Tictactoe:
             else:
                 print("Invalid option!")
 
-    def rematch(self):
-        while True:
-            question = input(f"Player {self.player_1} and {self.player_2}, would like a rematch ?\n"
-                             f"Type Y for YES or N for NO: ")
-            if question == "y" or "Y":
-                self.pos = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-                self.run()
-            elif question == "n" or "N":
-                print("See you next time!")
-                quit()
-            else:
-                print("Invalid option!")
 
 class Players:
     def __init__(self):
