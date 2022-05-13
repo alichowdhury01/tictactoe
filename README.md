@@ -2,7 +2,7 @@
 Tic-tac-toe 
 
 # Description
-This is a code for the tic-tac-toe game coded in Python object oriented programming
+This is a tic-tac-toe game coded in Python object oriented programming
 
 # Execution 
 The must executed in terminal IDE
