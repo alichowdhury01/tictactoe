@@ -1,0 +1,42 @@
+import pygame
+import sys
+
+pygame.init()
+
+WIDTH = 600
+HEIGHT = 600
+LINE_WIDTH = 15
+
+
+# Color
+BG_COLOR = (28, 170, 156)
+LINE_COLOR = (23, 145, 135)
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Tic Tac Toe")
+screen.fill(BG_COLOR)
+
+def draw_lines():
+
+    # Horizontal 1
+    pygame.draw.line(screen, LINE_COLOR, (0, 200), (600, 200), LINE_WIDTH)
+
+    # Horizontal 2
+    pygame.draw.line(screen, LINE_COLOR, (0, 400), (600, 400), LINE_WIDTH)
+
+    # Vertical 1
+    pygame.draw.line(screen, LINE_COLOR, (200, 0), (200, 600), LINE_WIDTH)
+
+    # Vertical 2
+    pygame.draw.line(screen, LINE_COLOR, (400, 0), (400, 600), LINE_WIDTH)
+
+
+draw_lines()
+
+# mainloop
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
+
+    pygame.display.update()
